@@ -14,7 +14,7 @@ namespace Cinerama.iOS
 		{
 			global::Xamarin.Forms.Forms.Init();
 
-			LoadApplication(new App());
+			LoadApplication(new App(new PrismInitializer()));
 
 			return base.FinishedLaunching(app, options);
 		}

@@ -1,29 +1,21 @@
-﻿using Xamarin.Forms;
+﻿using System;
+using Prism.Unity;
 
 namespace Cinerama
 {
-	public partial class App : Application
+	public partial class App : PrismApplication
 	{
-		public App()
+		public App(IPlatformInitializer initializer) : base(initializer) { }
+
+		protected override void OnInitialized()
 		{
 			InitializeComponent();
-
-			MainPage = new CineramaPage();
+			NavigationService.NavigateAsync(new Uri("/UpcomingMoviesPage", UriKind.Absolute));
 		}
 
-		protected override void OnStart()
+		protected override void RegisterTypes()
 		{
-			// Handle when your app starts
-		}
-
-		protected override void OnSleep()
-		{
-			// Handle when your app sleeps
-		}
-
-		protected override void OnResume()
-		{
-			// Handle when your app resumes
+			Container.RegisterTypeForNavigation<UpcomingMoviesPage, UpcomingMoviesViewModel>();
 		}
 	}
 }
