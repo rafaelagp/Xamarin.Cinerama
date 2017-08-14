@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
 	x:Class="Cinerama.Views.UpcomingMoviesPage"
 	Title="{Binding Title}">
+
 	<ContentPage.Content>
 		
 		<ListView ItemsSource="{Binding Movies}"
@@ -26,7 +28,13 @@
 									<RowDefinition Height="*"/>
 									<RowDefinition Height="*"/>
 								</Grid.RowDefinitions>
-								
+
+								<ffimageloading:CachedImage Grid.RowSpan="3" Grid.Column="0"
+									HorizontalOptions="Fill"
+									VerticalOptions="Fill"
+									Aspect="AspectFit"
+									Source="{Binding PosterPath, 
+											Converter={StaticResource PosterPathConverter}}"/>
 								<Label Grid.Row="0" Grid.Column="1"
 									HorizontalOptions="Start"
 									VerticalOptions="Start"

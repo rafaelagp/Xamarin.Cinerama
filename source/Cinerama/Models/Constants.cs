@@ -1,4 +1,4 @@
-﻿namespace Cinerama
+﻿namespace Cinerama.Models
 {
 	public static class Constants
 	{

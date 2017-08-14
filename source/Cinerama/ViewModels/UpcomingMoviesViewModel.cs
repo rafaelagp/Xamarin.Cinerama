@@ -6,7 +6,6 @@ using Newtonsoft.Json;
 using Prism.Navigation;
 using System;
 using Cinerama.Helpers;
-using Newtonsoft.Json.Converters;
 
 namespace Cinerama.ViewModels
 {
@@ -37,13 +36,17 @@ namespace Cinerama.ViewModels
 			var apiKeyUrlParam = $"?api_key={Constants.DatabaseApi.API_KEY}";
 			var languageUrlParam = "&language=en-US";
 			var pageUrlParam = $"&page={page}";
-			var url = $"{Constants.DatabaseApi.UpcomingMoviesApiUrl}{apiKeyUrlParam}{languageUrlParam}{pageUrlParam}";
+			var url = $"{Constants.DatabaseApi.UpcomingMoviesApiUrl}{apiKeyUrlParam}{languageUrlParam}{pageUrlParam}"; //TODO turn into a method
 
 			try
 			{
 				var stringResult = await _httpClient.GetStringAsync(url);
-				var dateTimeConverter = new IsoDateTimeConverter { DateTimeFormat = "yyyy-MM-dd" };
-				var movies = JsonConvert.DeserializeObject<MovieModelList>(stringResult, dateTimeConverter);
+				var jsonSettings = new JsonSerializerSettings
+				{
+					ContractResolver = new CustomPropertyNamesContractResolver(),
+					DateFormatString = "yyyy-MM-dd"
+				};
+				var movies = JsonConvert.DeserializeObject<MovieModelList>(stringResult, jsonSettings);
 				movies.Results.ForEach(Movies.Add);
 			}
 			catch (Exception ex)
