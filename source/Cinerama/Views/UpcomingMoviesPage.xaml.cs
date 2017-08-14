@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 using Xamarin.Forms;
 
-namespace Cinerama
+namespace Cinerama.Views
 {
 	public partial class UpcomingMoviesPage : ContentPage
 	{
