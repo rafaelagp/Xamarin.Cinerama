@@ -3,7 +3,9 @@ using Cinerama.ViewModels;
 using Cinerama.Views;
 using Prism.Unity;
 using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
 
+[assembly:XamlCompilation(XamlCompilationOptions.Compile)]
 namespace Cinerama
 {
 	public partial class App : PrismApplication

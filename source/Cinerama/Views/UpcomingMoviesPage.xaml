@@ -1,9 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
-	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	x:Class="Cinerama.Views.UpcomingMoviesPage"
 	Title="{Binding Title}">
 	<ContentPage.Content>
-		<Label Text="Hello, World!"/>
+		
+		<ListView ItemsSource="{Binding Movies}"
+			HasUnevenRows="true"
+			SeparatorVisibility="None">
+			<ListView.ItemTemplate>
+				<DataTemplate>
+					<ViewCell Height="150">
+						<Frame Margin="5,7.5"
+							Padding="10"
+							CornerRadius="7"
+							BackgroundColor="Teal">
+							<Grid ColumnSpacing="1"
+								RowSpacing="1">
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="*"/>
+									<ColumnDefinition Width="2*"/>
+								</Grid.ColumnDefinitions>
+								<Grid.RowDefinitions>
+									<RowDefinition Height="2*"/>
+									<RowDefinition Height="*"/>
+									<RowDefinition Height="*"/>
+								</Grid.RowDefinitions>
+								
+								<Label Grid.Row="0" Grid.Column="1"
+									HorizontalOptions="Start"
+									VerticalOptions="Start"
+									FontSize="18"
+									FontAttributes="Bold"
+									TextColor="White"
+									Text="{Binding Title}"/>
+								<Label Grid.Row="1" Grid.Column="1"
+									HorizontalOptions="Start"
+									VerticalOptions="Start"
+									Text="Genre goes here"
+									LineBreakMode="TailTruncation"/>
+								<Label Grid.Row="2" Grid.Column="1"
+									HorizontalOptions="Start"
+									VerticalOptions="Start"
+									Text="{Binding ReleaseDate, StringFormat='{0:yyyy/MM/dd}'}"/>
+							</Grid>
+						</Frame>
+					</ViewCell>
+				</DataTemplate>
+			</ListView.ItemTemplate>
+		</ListView>
+		
 	</ContentPage.Content>
 </ContentPage>

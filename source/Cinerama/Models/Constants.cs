@@ -8,7 +8,8 @@
 			public const string BASE_API_URL = "https://api.themoviedb.org/3";
 			public const string BASE_IMAGE_API_URL = "http://image.tmdb.org/t/p";
 
-			public static string MoviesApiUrl = $"{BASE_API_URL}/movies";
+			public static string MoviesApiUrl = $"{BASE_API_URL}/movie";
+			public static string MovieGenresApiUrl = $"{BASE_API_URL}/genre/movie/list";
 			public static string UpcomingMoviesApiUrl = $"{MoviesApiUrl}/upcoming";
 		}
 	}
