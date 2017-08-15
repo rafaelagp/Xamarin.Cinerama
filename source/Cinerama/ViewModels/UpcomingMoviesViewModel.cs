@@ -5,7 +5,8 @@ using Cinerama.Models;
 using Newtonsoft.Json;
 using Prism.Navigation;
 using System;
-using Cinerama.Helpers;
+using Cinerama.Utils;
+using Cinerama.Utils.Json;
 
 namespace Cinerama.ViewModels
 {
@@ -33,13 +34,9 @@ namespace Cinerama.ViewModels
 		{
 			IsBusy = true;
 
-			var apiKeyUrlParam = $"?api_key={Constants.DatabaseApi.API_KEY}";
-			var languageUrlParam = "&language=en-US";
-			var pageUrlParam = $"&page={page}";
-			var url = $"{Constants.DatabaseApi.UpcomingMoviesApiUrl}{apiKeyUrlParam}{languageUrlParam}{pageUrlParam}"; //TODO turn into a method
-
 			try
 			{
+				var url = UrlBuilder.CreateUri(Constants.DatabaseApi.UpcomingMoviesApiUrl, page);
 				var stringResult = await _httpClient.GetStringAsync(url);
 				var jsonSettings = new JsonSerializerSettings
 				{

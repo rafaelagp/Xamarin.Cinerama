@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 using Newtonsoft.Json.Serialization;
 
-namespace Cinerama
+namespace Cinerama.Utils.Json
 {
 	public class CustomPropertyNamesContractResolver : DefaultContractResolver
 	{

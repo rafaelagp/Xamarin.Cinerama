@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Globalization;
-using Cinerama.Models;
+using Cinerama.Utils;
 using Xamarin.Forms;
 
 namespace Cinerama.ValueConverters
@@ -10,8 +10,7 @@ namespace Cinerama.ValueConverters
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
 			var filename = value as string;
-			var baseUrl = $"{Constants.DatabaseApi.BASE_IMAGE_API_URL}/w185"; //TODO receive image size constant as parameter
-			var url = $"{baseUrl}{filename}"; //TODO turn into method
+			var url = UrlBuilder.CreatePosterUri(filename);
 
 			return url;
 		}

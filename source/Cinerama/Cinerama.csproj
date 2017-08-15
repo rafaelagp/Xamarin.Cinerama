@@ -32,7 +32,8 @@
     <Folder Include="Views\" />
     <Folder Include="ViewModels\" />
     <Folder Include="Models\" />
-    <Folder Include="Helpers\" />
+    <Folder Include="Utils\" />
     <Folder Include="ValueConverters\" />
+    <Folder Include="Utils\Json\" />
   </ItemGroup>
 </Project>
