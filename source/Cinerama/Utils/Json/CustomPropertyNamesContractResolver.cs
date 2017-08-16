@@ -3,6 +3,10 @@ using Newtonsoft.Json.Serialization;
 
 namespace Cinerama.Utils.Json
 {
+	/// <summary>
+	/// Custom property name resolver for Newtonsoft.Json, converts PascalCase into SnakeCase. 
+	/// Ex.: PosterPath -> poster_path. 
+	/// </summary>
 	public class CustomPropertyNamesContractResolver : DefaultContractResolver
 	{
 		static readonly CultureInfo Culture = CultureInfo.InvariantCulture;

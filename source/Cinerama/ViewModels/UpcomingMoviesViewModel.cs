@@ -1,26 +1,25 @@
 ﻿using System.Collections.ObjectModel;
-using System.Net.Http;
 using System.Threading.Tasks;
 using Cinerama.Models;
-using Newtonsoft.Json;
 using Prism.Navigation;
 using System;
 using Cinerama.Utils;
-using Cinerama.Utils.Json;
+using Cinerama.Interfaces;
+using Cinerama.Services;
 
 namespace Cinerama.ViewModels
 {
 	public class UpcomingMoviesViewModel : BaseViewModel
 	{
-		HttpClient _httpClient;
 		INavigationService _navigationService;
+		ITheMovieDatabaseService _tmdbService;
 
 		public ObservableCollection<MovieModel> Movies { get; set; }
 
-		public UpcomingMoviesViewModel(INavigationService navigationService)
+		public UpcomingMoviesViewModel(ITheMovieDatabaseService tmdbService, INavigationService navigationService)
 		{
 			_navigationService = navigationService;
-			_httpClient = new HttpClient();
+			_tmdbService = tmdbService;
 			Movies = new ObservableCollection<MovieModel>();
 			Task.Run(async () => await AddUpcomingMovies());
 		}
@@ -36,15 +35,11 @@ namespace Cinerama.ViewModels
 
 			try
 			{
-				var url = UrlBuilder.CreateUri(Constants.DatabaseApi.UpcomingMoviesApiUrl, page);
-				var stringResult = await _httpClient.GetStringAsync(url);
-				var jsonSettings = new JsonSerializerSettings
+				using (var service = new TheMovieDatabaseService())
 				{
-					ContractResolver = new CustomPropertyNamesContractResolver(),
-					DateFormatString = "yyyy-MM-dd"
-				};
-				var movies = JsonConvert.DeserializeObject<MovieModelList>(stringResult, jsonSettings);
-				movies.Results.ForEach(Movies.Add);
+					var movies = await service.GetUpcomingMoviesAsync(page);
+					movies.ForEach(Movies.Add);
+				}
 			}
 			catch (Exception ex)
 			{

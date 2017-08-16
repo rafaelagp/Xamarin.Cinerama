@@ -35,5 +35,7 @@
     <Folder Include="Utils\" />
     <Folder Include="ValueConverters\" />
     <Folder Include="Utils\Json\" />
+    <Folder Include="Services\" />
+    <Folder Include="Interfaces\" />
   </ItemGroup>
 </Project>
