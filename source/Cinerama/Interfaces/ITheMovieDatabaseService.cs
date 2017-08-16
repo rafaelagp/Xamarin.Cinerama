@@ -6,6 +6,7 @@ namespace Cinerama.Interfaces
 {
 	public interface ITheMovieDatabaseService
 	{
-		Task<List<MovieModel>> GetUpcomingMoviesAsync(int page, string language = "en-us");
+		Task<List<GenreModel>> GetMovieGenresAsync(string language = "en-us");
+		Task<List<MovieModel>> GetUpcomingMoviesAsync(int page = 1, string language = "en-us");
 	}
 }

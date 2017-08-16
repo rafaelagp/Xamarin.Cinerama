@@ -64,13 +64,23 @@ namespace Cinerama.Utils
 		/// <param name="endpoint">The endpoint URL.</param>
 		/// <param name="page">A pagination number for the endpoint collection.</param>
 		/// <param name="language">The language for the returned data.</param>
-		public static Uri CreateUri(string endpoint, int page, string language = ENGLISH_LANG)
+		public static Uri CreateUri(string endpoint, int page = 1, string language = ENGLISH_LANG)
 		{
 			var langParam = !language.Equals(ENGLISH_LANG) ? $"&{LANG_PARAM_NAME}={language}" : string.Empty;
-			var pageParam = $"&{PAGE_PARAM_NAME}={page}";
+			var pageParam = page != 1 ? $"&{PAGE_PARAM_NAME}={page}" : string.Empty;
 			var url = $"{endpoint}?{ApiKeyParam}{langParam}{pageParam}";
 
 			return new Uri(url);
+		}
+		/// <summary>
+		/// Builds a query URI for a collection endpoint at The Movie Database.
+		/// </summary>
+		/// <returns>The URI.</returns>
+		/// <param name="endpoint">The endpoint URL.</param>
+		/// <param name="language">The language for the returned data.</param>
+		public static Uri CreateUri(string endpoint, string language = ENGLISH_LANG)
+		{
+			return CreateUri(endpoint, 1, language);
 		}
 	}
 }

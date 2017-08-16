@@ -6,6 +6,8 @@ using System;
 using Cinerama.Utils;
 using Cinerama.Interfaces;
 using Cinerama.Services;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace Cinerama.ViewModels
 {
@@ -14,14 +16,16 @@ namespace Cinerama.ViewModels
 		INavigationService _navigationService;
 		ITheMovieDatabaseService _tmdbService;
 
+		public List<GenreModel> Genres { get; set; }
 		public ObservableCollection<MovieModel> Movies { get; set; }
 
 		public UpcomingMoviesViewModel(ITheMovieDatabaseService tmdbService, INavigationService navigationService)
 		{
 			_navigationService = navigationService;
 			_tmdbService = tmdbService;
+			Genres = new List<GenreModel>();
 			Movies = new ObservableCollection<MovieModel>();
-			Task.Run(async () => await AddUpcomingMovies());
+			Task.Run(async () => await AddUpcomingMoviesAsync());
 		}
 
 		public override void OnNavigatedTo(NavigationParameters parameters)
@@ -29,7 +33,7 @@ namespace Cinerama.ViewModels
 			Title = parameters["Title"] as string;
 		}
 
-		public async Task AddUpcomingMovies(int page = 1)
+		async Task AddUpcomingMoviesAsync(int page = 1)
 		{
 			IsBusy = true;
 
@@ -37,8 +41,15 @@ namespace Cinerama.ViewModels
 			{
 				using (var service = new TheMovieDatabaseService())
 				{
+					if (Genres.Count == 0)
+					{
+						Genres.AddRange(await service.GetMovieGenresAsync());
+					}
+
 					var movies = await service.GetUpcomingMoviesAsync(page);
-					movies.ForEach(Movies.Add);
+					movies.OrderBy(x => x.ReleaseDate)
+					      .ToList()
+					      .ForEach(AddUpcomingMovie);
 				}
 			}
 			catch (Exception ex)
@@ -47,6 +58,12 @@ namespace Cinerama.ViewModels
 			}
 
 			IsBusy = false;
+		}
+
+		void AddUpcomingMovie(MovieModel item)
+		{
+			item.GetGenreNames(Genres);
+			Movies.Add(item);
 		}
 	}
 }
