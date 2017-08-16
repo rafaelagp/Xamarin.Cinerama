@@ -37,5 +37,6 @@
     <Folder Include="Utils\Json\" />
     <Folder Include="Services\" />
     <Folder Include="Interfaces\" />
+    <Folder Include="Behaviors\" />
   </ItemGroup>
 </Project>

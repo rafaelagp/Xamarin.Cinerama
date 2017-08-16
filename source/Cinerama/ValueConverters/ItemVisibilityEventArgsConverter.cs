@@ -1,25 +1,19 @@
 ﻿using System;
 using System.Globalization;
-using Cinerama.Utils;
 using Xamarin.Forms;
 
 namespace Cinerama.ValueConverters
 {
 	/// <summary>
-	/// Converts a poster filename into an accessible URL.
+	/// Part of the infinite scroller solution by Rasmus Christensen
+	/// https://github.com/rasmuschristensen/SimpleListViewInfiniteScrolling
 	/// </summary>
-	public class MoviePosterPathValueConverter : IValueConverter
+	public class ItemVisibilityEventArgsConverter : IValueConverter
 	{
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
-			var filename = value as string;
-			if (!string.IsNullOrWhiteSpace(filename))
-			{
-				var url = UrlBuilder.CreatePosterUri(filename);
-				return url;
-			}
-
-			return string.Empty;
+			var eventArgs = value as ItemVisibilityEventArgs;
+			return eventArgs.Item;
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
