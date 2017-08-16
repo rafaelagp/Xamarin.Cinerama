@@ -16,6 +16,7 @@ namespace Cinerama.ViewModels
 	public class UpcomingMoviesViewModel : BaseViewModel
 	{
 		int _lastLoadedPage = 1;
+		bool _hasLoadedLastPage;
 		bool _shouldLoadMore;
 		string _lastLoadedMovieTitle;
 		INavigationService _navigationService;
@@ -43,7 +44,7 @@ namespace Cinerama.ViewModels
 
 		async void LoadMoreUpcomingMovies(MovieModel item)
 		{
-			if (item.Title.Equals(_lastLoadedMovieTitle) && _shouldLoadMore)
+			if (item.Title.Equals(_lastLoadedMovieTitle) && _shouldLoadMore && !_hasLoadedLastPage)
 			{
 				await AddUpcomingMoviesAsync(++_lastLoadedPage);
 				return;
@@ -76,7 +77,8 @@ namespace Cinerama.ViewModels
 					      .ToList()
 					      .ForEach(AddUpcomingMovie);
 					
-					_lastLoadedMovieTitle = Movies.Last().Title; 
+					_lastLoadedMovieTitle = Movies.Last().Title;
+					_hasLoadedLastPage = movies.Count == 0;
 					_shouldLoadMore = false;
 				}
 			}
