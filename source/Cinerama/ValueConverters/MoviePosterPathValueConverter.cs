@@ -5,6 +5,9 @@ using Xamarin.Forms;
 
 namespace Cinerama.ValueConverters
 {
+	/// <summary>
+	/// Converts a poster filename into an accessible URL.
+	/// </summary>
 	public class MoviePosterPathValueConverter : IValueConverter
 	{
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

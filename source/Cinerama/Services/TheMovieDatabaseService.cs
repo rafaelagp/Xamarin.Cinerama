@@ -10,6 +10,9 @@ using Newtonsoft.Json;
 
 namespace Cinerama.Services
 {
+	/// <summary>
+	/// The Movie Database service.
+	/// </summary>
 	public class TheMovieDatabaseService : IDisposable, ITheMovieDatabaseService
 	{
 		HttpClient _httpClient;
@@ -24,7 +27,12 @@ namespace Cinerama.Services
 				DateFormatString = "yyyy-MM-dd"
 			};
 		}
-
+		/// <summary>
+		/// Lists upcoming movies asynchronously.
+		/// </summary>
+		/// <returns>A list of upcoming movies.</returns>
+		/// <param name="page">The pagination number.</param>
+		/// <param name="language">The movie data language.</param>
 		public async Task<List<MovieModel>> GetUpcomingMoviesAsync(int page, string language = "en-us")
 		{
 			var url = UrlBuilder.CreateUri(Constants.DatabaseApi.UpcomingMoviesApiUrl, page, language);
