@@ -8,8 +8,7 @@ using Cinerama.Interfaces;
 using Cinerama.Services;
 using System.Linq;
 using System.Collections.Generic;
-using System.Windows.Input;
-using Xamarin.Forms;
+using Prism.Commands;
 
 namespace Cinerama.ViewModels
 {
@@ -18,14 +17,15 @@ namespace Cinerama.ViewModels
 		int _lastLoadedPage = 1;
 		bool _hasLoadedLastPage;
 		bool _shouldLoadMore;
-		string _lastLoadedMovieTitle;
+		int _lastLoadedMovieIndex = 9; // Position of the movie list where LoadMoreCommand should be called
+		MovieModel _lastLoadedMovie;
 		INavigationService _navigationService;
 		ITheMovieDatabaseService _tmdbService;
 
 		public List<GenreModel> Genres { get; set; }
 		public ObservableCollection<MovieModel> Movies { get; set; }
 
-		public ICommand LoadMoreCommand { get; set; }
+		public DelegateCommand<MovieModel> LoadMoreCommand { get; set; }
 
 		public UpcomingMoviesViewModel(ITheMovieDatabaseService tmdbService, INavigationService navigationService)
 		{
@@ -33,18 +33,13 @@ namespace Cinerama.ViewModels
 			_tmdbService = tmdbService;
 			Genres = new List<GenreModel>();
 			Movies = new ObservableCollection<MovieModel>();
-			LoadMoreCommand = new Command<MovieModel>(LoadMoreUpcomingMovies);
+			LoadMoreCommand = new DelegateCommand<MovieModel>(LoadMoreUpcomingMovies);
 			Task.Run(async () => await AddUpcomingMoviesAsync(_lastLoadedPage));
-		}
-
-		public override void OnNavigatedTo(NavigationParameters parameters)
-		{
-			Title = parameters["Title"] as string;
 		}
 
 		async void LoadMoreUpcomingMovies(MovieModel item)
 		{
-			if (item.Title.Equals(_lastLoadedMovieTitle) && _shouldLoadMore && !_hasLoadedLastPage)
+			if (item == _lastLoadedMovie && _shouldLoadMore && !_hasLoadedLastPage)
 			{
 				await AddUpcomingMoviesAsync(++_lastLoadedPage);
 				return;
@@ -77,7 +72,8 @@ namespace Cinerama.ViewModels
 					      .ToList()
 					      .ForEach(AddUpcomingMovie);
 					
-					_lastLoadedMovieTitle = Movies.Last().Title;
+					_lastLoadedMovie = Movies[_lastLoadedMovieIndex];
+					_lastLoadedMovieIndex += movies.Count;
 					_hasLoadedLastPage = movies.Count == 0;
 					_shouldLoadMore = false;
 				}

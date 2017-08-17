@@ -18,8 +18,7 @@ namespace Cinerama
 		protected override void OnInitialized()
 		{
 			InitializeComponent();
-			NavigationService.NavigateAsync(new Uri("/NavigationPage/UpcomingMoviesPage?Title=Cinerama", 
-			                                        UriKind.Absolute));
+			NavigationService.NavigateAsync(new Uri("/NavigationPage/UpcomingMoviesPage", UriKind.Absolute));
 		}
 
 		protected override void RegisterTypes()
