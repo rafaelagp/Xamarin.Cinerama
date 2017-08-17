@@ -26,7 +26,7 @@
 				SeparatorVisibility="None"
 				BackgroundColor="{x:Static utils:ColorConstants.Background}"
 				ItemsSource="{Binding Movies}">
-				<ListView.Behaviors>
+				<ListView.Behaviors>					
 					<behaviors:ListViewPagingBehavior Command="{Binding LoadMoreCommand}"
 						Converter="{StaticResource LoadMoreConverter}"/>
 					<prismBehaviors:EventToCommandBehavior EventName="ItemTapped"
