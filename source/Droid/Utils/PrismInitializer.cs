@@ -1,8 +1,7 @@
-﻿using System;
-using Microsoft.Practices.Unity;
+﻿using Microsoft.Practices.Unity;
 using Prism.Unity;
 
-namespace Cinerama.Droid
+namespace Cinerama.Droid.Utils
 {
 	public class PrismInitializer : IPlatformInitializer
 	{
