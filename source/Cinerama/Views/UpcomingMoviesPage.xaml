@@ -49,6 +49,9 @@
 										HorizontalOptions="Start"
 										VerticalOptions="Fill"
 										Aspect="AspectFit"
+										RetryDelay="5000"
+										RetryCount="2"
+										LoadingPlaceholder="poster_placeholder.png"
 										Source="{Binding PosterPath, 
 												Converter={StaticResource PosterPathConverter}}"/>
 									<Label Grid.Row="0" Grid.Column="1"

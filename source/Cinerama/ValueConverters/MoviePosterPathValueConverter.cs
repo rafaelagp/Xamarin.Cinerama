@@ -19,7 +19,7 @@ namespace Cinerama.ValueConverters
 				return url;
 			}
 
-			return string.Empty;
+			return "poster_placeholder.png";
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
