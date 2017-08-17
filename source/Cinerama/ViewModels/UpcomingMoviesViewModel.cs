@@ -25,16 +25,27 @@ namespace Cinerama.ViewModels
 		public List<GenreModel> Genres { get; set; }
 		public ObservableCollection<MovieModel> Movies { get; set; }
 
+		public DelegateCommand<MovieModel> ItemTappedCommand { get; set; }
 		public DelegateCommand<MovieModel> LoadMoreCommand { get; set; }
 
 		public UpcomingMoviesViewModel(ITheMovieDatabaseService tmdbService, INavigationService navigationService)
 		{
 			_navigationService = navigationService;
 			_tmdbService = tmdbService;
+
 			Genres = new List<GenreModel>();
 			Movies = new ObservableCollection<MovieModel>();
+
+			ItemTappedCommand = new DelegateCommand<MovieModel>(NavigateToMovieDetail);
 			LoadMoreCommand = new DelegateCommand<MovieModel>(LoadMoreUpcomingMovies);
+
 			Task.Run(async () => await AddUpcomingMoviesAsync(_lastLoadedPage));
+		}
+
+		async void NavigateToMovieDetail(MovieModel movie)
+		{
+			await _navigationService.NavigateAsync(nameof(MovieDetailPage),
+												   new NavigationParameters { { "Movie", movie } });
 		}
 
 		async void LoadMoreUpcomingMovies(MovieModel item)

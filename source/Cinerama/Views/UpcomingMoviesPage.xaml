@@ -2,14 +2,16 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
-	xmlns:behaviors="clr-namespace:Cinerama.Behaviors;assembly=Cinerama"
 	xmlns:converters="clr-namespace:Cinerama.ValueConverters;assembly=Cinerama"
+	xmlns:behaviors="clr-namespace:Cinerama.Behaviors;assembly=Cinerama"
+	xmlns:prismBehaviors="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
 	x:Class="Cinerama.Views.UpcomingMoviesPage"
 	Title="{Binding Title}">
 
 	<ContentPage.Resources>
 		<ResourceDictionary>
 			<converters:ItemVisibilityEventArgsConverter x:Key="LoadMoreConverter"/>
+			<converters:ItemTappedEventArgsConverter x:Key="ItemTappedConverter"/>
 		</ResourceDictionary>
 	</ContentPage.Resources>
 
@@ -25,6 +27,9 @@
 				<ListView.Behaviors>
 					<behaviors:ListViewPagingBehavior Command="{Binding LoadMoreCommand}"
 						Converter="{StaticResource LoadMoreConverter}"/>
+					<prismBehaviors:EventToCommandBehavior EventName="ItemTapped"
+						Command="{Binding ItemTappedCommand}" 
+						EventArgsConverter="{StaticResource ItemTappedConverter}"/>
 				</ListView.Behaviors>
 				<ListView.ItemTemplate>
 					<DataTemplate>

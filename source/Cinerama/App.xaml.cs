@@ -28,6 +28,7 @@ namespace Cinerama
 
 			Container.RegisterTypeForNavigation<NavigationPage>();
 			Container.RegisterTypeForNavigation<UpcomingMoviesPage, UpcomingMoviesViewModel>();
+			Container.RegisterTypeForNavigation<MovieDetailPage, MovieDetailViewModel>();
 		}
 	}
 }
