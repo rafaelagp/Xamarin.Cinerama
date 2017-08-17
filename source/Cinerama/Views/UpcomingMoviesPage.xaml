@@ -14,61 +14,74 @@
 	</ContentPage.Resources>
 
 	<ContentPage.Content>
-		<ListView ItemsSource="{Binding Movies}"
-			HasUnevenRows="true"
-			SeparatorVisibility="None">
-			<ListView.Behaviors>
-				<behaviors:ListViewPagingBehavior Command="{Binding LoadMoreCommand}"
-					Converter="{StaticResource LoadMoreConverter}"/>
-			</ListView.Behaviors>
-			<ListView.ItemTemplate>
-				<DataTemplate>
-					<ViewCell Height="150">
-						<Frame Margin="10,7.5"
-							Padding="0"
-							CornerRadius="6"
-							BackgroundColor="#3F424B">
-							<Grid ColumnSpacing="0"
-								RowSpacing="1">
-								<Grid.ColumnDefinitions>
-									<ColumnDefinition Width="95"/>
-									<ColumnDefinition Width="*"/>
-								</Grid.ColumnDefinitions>
-								<Grid.RowDefinitions>
-									<RowDefinition Height="2*"/>
-									<RowDefinition Height="2*"/>
-									<RowDefinition Height="*"/>
-								</Grid.RowDefinitions>
+		<Grid Margin="0"
+			Padding="0"
+			HorizontalOptions="Fill"
+			VerticalOptions="Fill">
+			<ListView Grid.Row="0"
+				HasUnevenRows="true"
+				SeparatorVisibility="None"
+				ItemsSource="{Binding Movies}">
+				<ListView.Behaviors>
+					<behaviors:ListViewPagingBehavior Command="{Binding LoadMoreCommand}"
+						Converter="{StaticResource LoadMoreConverter}"/>
+				</ListView.Behaviors>
+				<ListView.ItemTemplate>
+					<DataTemplate>
+						<ViewCell Height="150">
+							<Frame Margin="10,7.5"
+								Padding="0"
+								CornerRadius="6"
+								BackgroundColor="#3F424B">
+								<Grid ColumnSpacing="0"
+									RowSpacing="1">
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition Width="95"/>
+										<ColumnDefinition Width="*"/>
+									</Grid.ColumnDefinitions>
+									<Grid.RowDefinitions>
+										<RowDefinition Height="2*"/>
+										<RowDefinition Height="2*"/>
+										<RowDefinition Height="*"/>
+									</Grid.RowDefinitions>
 
-								<ffimageloading:CachedImage Grid.RowSpan="3" Grid.Column="0"
-									HorizontalOptions="Start"
-									VerticalOptions="Fill"
-									Aspect="AspectFit"
-									Source="{Binding PosterPath, 
-											Converter={StaticResource PosterPathConverter}}"/>
-								<Label Grid.Row="0" Grid.Column="1"
-									Margin="15,10,15,0"
-									HorizontalOptions="Start"
-									VerticalOptions="Start"
-									FontSize="18"
-									FontAttributes="Bold"
-									TextColor="White"
-									Text="{Binding Title}"/>
-								<Label Grid.Row="1" Grid.Column="1"
-									Margin="15,0,15,0"
-									HorizontalOptions="Start"
-									VerticalOptions="Center"
-									Text="{Binding GenreNames}" />
-								<Label Grid.Row="2" Grid.Column="1"
-									Margin="15,0,15,10"
-									HorizontalOptions="Start"
-									VerticalOptions="End"
-									Text="{Binding ReleaseDate, StringFormat='{0:yyyy/MM/dd}'}"/>
-							</Grid>
-						</Frame>
-					</ViewCell>
-				</DataTemplate>
-			</ListView.ItemTemplate>
-		</ListView>
+									<ffimageloading:CachedImage Grid.RowSpan="3" Grid.Column="0"
+										HorizontalOptions="Start"
+										VerticalOptions="Fill"
+										Aspect="AspectFit"
+										Source="{Binding PosterPath, 
+												Converter={StaticResource PosterPathConverter}}"/>
+									<Label Grid.Row="0" Grid.Column="1"
+										Margin="15,10,15,0"
+										HorizontalOptions="Start"
+										VerticalOptions="Start"
+										FontSize="18"
+										FontAttributes="Bold"
+										TextColor="White"
+										Text="{Binding Title}"/>
+									<Label Grid.Row="1" Grid.Column="1"
+										Margin="15,0,15,0"
+										HorizontalOptions="Start"
+										VerticalOptions="Center"
+										Text="{Binding GenreNames}" />
+									<Label Grid.Row="2" Grid.Column="1"
+										Margin="15,0,15,10"
+										HorizontalOptions="Start"
+										VerticalOptions="End"
+										Text="{Binding ReleaseDate, StringFormat='{0:yyyy/MM/dd}'}"/>
+								</Grid>
+							</Frame>
+						</ViewCell>
+					</DataTemplate>
+				</ListView.ItemTemplate>
+			</ListView>
+			<ActivityIndicator Grid.Row="0"
+				Margin="0,0,0,10"
+				HeightRequest="40"
+				HorizontalOptions="CenterAndExpand"
+				VerticalOptions="EndAndExpand"
+				IsRunning="{Binding IsBusy}"
+				IsVisible="{Binding IsBusy}"/>
+		</Grid>
 	</ContentPage.Content>
 </ContentPage>
