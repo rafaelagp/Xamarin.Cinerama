@@ -6,16 +6,32 @@
 	xmlns:utils="clr-namespace:Cinerama.Utils;assembly=Cinerama"
 	x:Class="Cinerama.MovieDetailPage"
 	Title="{Binding Movie.Title}">
+
+	<ContentPage.Resources>
+		<ResourceDictionary>
+			<OnPlatform x:Key="MediumTextFontSize" x:TypeArguments="Font" Android="16" iOS="15" />
+
+			<Style
+				x:Key="MediumTextStyle"
+				TargetType="Label"
+				BaseResourceKey="SmallTextStyle">
+				<Setter 
+					Property="Font"
+                    Value="{StaticResource MediumTextFontSize}" />
+			</Style>
+		</ResourceDictionary>
+	</ContentPage.Resources>
 	
 	<ContentPage.Content>
-		<ScrollView Orientation="Vertical">
+		<ScrollView Orientation="Vertical"
+			BackgroundColor="{x:Static utils:ColorConstants.Background}">
 			<StackLayout Orientation="Vertical">
 				<Frame Margin="10,10,10,5"
 					Padding="0"
 					CornerRadius="6"
 					HorizontalOptions="Fill"
 					VerticalOptions="Fill"
-					BackgroundColor="#3F424B">
+					BackgroundColor="{x:Static utils:ColorConstants.Frame}">
 					<StackLayout Margin="0"
 						Padding="0"
 						Spacing="1"
@@ -34,15 +50,18 @@
 									ConverterParameter={x:Static utils:DatabaseApiConstants.LARGE_POSTER_SIZE}}"/>
 						<Label
 							Margin="15,10"
+							Style="{StaticResource MediumTextStyle}"
 							HorizontalOptions="CenterAndExpand"
 							VerticalOptions="StartAndExpand"
 							Text="{Binding Movie.Overview}"/>
 						<Label
 							Margin="15,10"
+							Style="{StaticResource MediumTextStyle}"
 							HorizontalOptions="CenterAndExpand"
 							VerticalOptions="StartAndExpand"
 							Text="{Binding Movie.GenreNames}" />
 						<Label Margin="15,10"
+							Style="{StaticResource MediumTextStyle}"
 							HorizontalOptions="CenterAndExpand"
 							VerticalOptions="StartAndExpand"
 							Text="{Binding Movie.ReleaseDate, StringFormat='{0:yyyy/MM/dd}'}"/>

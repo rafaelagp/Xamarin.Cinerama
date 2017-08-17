@@ -3,12 +3,24 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	xmlns:prism="clr-namespace:Prism.Unity;assembly=Prism.Unity.Forms"
 	xmlns:converters="clr-namespace:Cinerama.ValueConverters;assembly=Cinerama"
+	xmlns:utils="clr-namespace:Cinerama.Utils;assembly=Cinerama"
 	x:Class="Cinerama.App">
 	
 	<Application.Resources>
 		<ResourceDictionary>
 			<converters:MovieImagePathValueConverter x:Key="ImagePathConverter"/>
+			<OnPlatform x:Key="SmallTextFontSize" x:TypeArguments="Font" iOS="13" />
+
+			<Style
+				x:Key="SmallTextStyle"
+				TargetType="Label">
+				<Setter 
+					Property="Font"
+                    Value="{StaticResource SmallTextFontSize}" />
+				<Setter 
+					Property="TextColor"
+                    Value="{x:Static utils:ColorConstants.SmallText}" />
+			</Style>
 		</ResourceDictionary>
 	</Application.Resources>
-	
 </prism:PrismApplication>

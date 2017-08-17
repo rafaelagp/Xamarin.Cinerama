@@ -47,7 +47,7 @@ namespace Cinerama.ViewModels
 			await _navigationService.NavigateAsync(nameof(MovieDetailPage),
 												   new NavigationParameters { { "Movie", movie } });
 		}
-
+		// TODO test more extensively on iOS & test for connectivity crashes
 		async void LoadMoreUpcomingMovies(MovieModel item)
 		{
 			if (item == _lastLoadedMovie && _shouldLoadMore && !_hasLoadedLastPage)

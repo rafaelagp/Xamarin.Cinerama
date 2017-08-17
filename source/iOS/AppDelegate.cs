@@ -1,4 +1,5 @@
-﻿using Foundation;
+﻿using FFImageLoading.Forms.Touch;
+using Foundation;
 using Microsoft.Practices.Unity;
 using Prism.Unity;
 using UIKit;
@@ -11,6 +12,7 @@ namespace Cinerama.iOS
 		public override bool FinishedLaunching(UIApplication app, NSDictionary options)
 		{
 			global::Xamarin.Forms.Forms.Init();
+			CachedImageRenderer.Init();
 
 			LoadApplication(new App(new PrismInitializer()));
 
