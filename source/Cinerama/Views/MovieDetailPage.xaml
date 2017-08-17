@@ -3,6 +3,7 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
 	xmlns:converters="clr-namespace:Cinerama.ValueConverters;assembly=Cinerama"
+	xmlns:utils="clr-namespace:Cinerama.Utils;assembly=Cinerama"
 	x:Class="Cinerama.MovieDetailPage"
 	Title="{Binding Movie.Title}">
 	
@@ -29,7 +30,8 @@
 							RetryCount="2"
 							LoadingPlaceholder="poster_placeholder.png"
 							Source="{Binding Movie.PosterPath, 
-									Converter={StaticResource PosterPathConverter}}"/>
+									Converter={StaticResource ImagePathConverter},
+									ConverterParameter={x:Static utils:DatabaseApiConstants.LARGE_POSTER_SIZE}}"/>
 						<Label
 							Margin="15,10"
 							HorizontalOptions="CenterAndExpand"

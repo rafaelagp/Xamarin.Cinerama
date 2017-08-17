@@ -8,14 +8,16 @@ namespace Cinerama.ValueConverters
 	/// <summary>
 	/// Converts a poster filename into an accessible URL.
 	/// </summary>
-	public class MoviePosterPathValueConverter : IValueConverter
+	public class MovieImagePathValueConverter : IValueConverter
 	{
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
 			var filename = value as string;
+			var size = parameter != null ? parameter as string : DatabaseApiConstants.SMALL_POSTER_SIZE;
+
 			if (!string.IsNullOrWhiteSpace(filename))
 			{
-				var url = UrlBuilder.CreatePosterUri(filename);
+				var url = UrlBuilder.CreateImageUri(filename, size);
 				return url;
 			}
 

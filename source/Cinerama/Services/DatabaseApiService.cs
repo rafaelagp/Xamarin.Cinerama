@@ -11,14 +11,14 @@ using Newtonsoft.Json;
 namespace Cinerama.Services
 {
 	/// <summary>
-	/// The Movie Database service.
+	/// The Movie Database API service.
 	/// </summary>
-	public class TheMovieDatabaseService : IDisposable, ITheMovieDatabaseService
+	public class DatabaseApiService : IDisposable, IDatabaseApiService
 	{
 		HttpClient _httpClient;
 		JsonSerializerSettings _jsonSettings;
 
-		public TheMovieDatabaseService()
+		public DatabaseApiService()
 		{
 			_httpClient = new HttpClient();
 			_jsonSettings = new JsonSerializerSettings
@@ -35,7 +35,7 @@ namespace Cinerama.Services
 		/// <param name="language">The movie data language.</param>
 		public async Task<List<MovieModel>> GetUpcomingMoviesAsync(int page = 1, string language = "en-us")
 		{
-			var url = UrlBuilder.CreateUri(Constants.DatabaseApi.UpcomingMoviesApiUrl, page, language);
+			var url = UrlBuilder.CreateUri(DatabaseApiConstants.UpcomingMoviesApiUrl, page, language);
 			var result = await _httpClient.GetStringAsync(url);
 			var movies = JsonConvert.DeserializeObject<MovieModelList>(result, _jsonSettings);
 
@@ -48,7 +48,7 @@ namespace Cinerama.Services
 		/// <param name="language">The genre name language.</param>
 		public async Task<List<GenreModel>> GetMovieGenresAsync(string language = "en-us")
 		{
-			var url = UrlBuilder.CreateUri(Constants.DatabaseApi.MovieGenresApiUrl, language);
+			var url = UrlBuilder.CreateUri(DatabaseApiConstants.MovieGenresApiUrl, language);
 			var result = await _httpClient.GetStringAsync(url);
 			var genres = JsonConvert.DeserializeObject<GenreModelList>(result, _jsonSettings);
 

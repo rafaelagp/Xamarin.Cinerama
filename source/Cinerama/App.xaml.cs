@@ -23,7 +23,7 @@ namespace Cinerama
 
 		protected override void RegisterTypes()
 		{
-			Container.RegisterType<ITheMovieDatabaseService, TheMovieDatabaseService>(
+			Container.RegisterType<IDatabaseApiService, DatabaseApiService>(
 				new ContainerControlledLifetimeManager());
 
 			Container.RegisterTypeForNavigation<NavigationPage>();

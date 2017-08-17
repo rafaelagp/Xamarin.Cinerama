@@ -7,7 +7,7 @@
 	
 	<Application.Resources>
 		<ResourceDictionary>
-			<converters:MoviePosterPathValueConverter x:Key="PosterPathConverter"/>
+			<converters:MovieImagePathValueConverter x:Key="ImagePathConverter"/>
 		</ResourceDictionary>
 	</Application.Resources>
 	

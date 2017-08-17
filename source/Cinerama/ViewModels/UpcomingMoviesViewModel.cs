@@ -20,7 +20,7 @@ namespace Cinerama.ViewModels
 		int _lastLoadedMovieIndex = 9; // Position of the movie list where LoadMoreCommand should be called
 		MovieModel _lastLoadedMovie;
 		INavigationService _navigationService;
-		ITheMovieDatabaseService _tmdbService;
+		IDatabaseApiService _tmdbService;
 
 		public List<GenreModel> Genres { get; set; }
 		public ObservableCollection<MovieModel> Movies { get; set; }
@@ -28,7 +28,7 @@ namespace Cinerama.ViewModels
 		public DelegateCommand<MovieModel> ItemTappedCommand { get; set; }
 		public DelegateCommand<MovieModel> LoadMoreCommand { get; set; }
 
-		public UpcomingMoviesViewModel(ITheMovieDatabaseService tmdbService, INavigationService navigationService)
+		public UpcomingMoviesViewModel(IDatabaseApiService tmdbService, INavigationService navigationService)
 		{
 			_navigationService = navigationService;
 			_tmdbService = tmdbService;
@@ -71,7 +71,7 @@ namespace Cinerama.ViewModels
 
 			try
 			{
-				using (var service = new TheMovieDatabaseService())
+				using (var service = new DatabaseApiService())
 				{
 					if (Genres.Count == 0)
 					{

@@ -1,5 +1,5 @@
 ﻿using System;
-using DbConstants = Cinerama.Models.Constants.DatabaseApi;
+using DbConstants = Cinerama.Utils.DatabaseApiConstants;
 
 namespace Cinerama.Utils
 {
@@ -11,7 +11,7 @@ namespace Cinerama.Utils
 		/// <returns>The poster URI.</returns>
 		/// <param name="filename">Filename returned in a movie query.</param>
 		/// <param name="size">A size from the Configuration endpoint.</param>
-		public static Uri CreatePosterUri(string filename, string size = DbConstants.SMALL_POSTER_SIZE)
+		public static Uri CreateImageUri(string filename, string size = DbConstants.SMALL_POSTER_SIZE)
 		{
 			// Removes the starting '/'
 			filename = filename.Substring(1);

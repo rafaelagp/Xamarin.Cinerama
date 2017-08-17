@@ -2,9 +2,10 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+	xmlns:prismBehaviors="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
 	xmlns:converters="clr-namespace:Cinerama.ValueConverters;assembly=Cinerama"
 	xmlns:behaviors="clr-namespace:Cinerama.Behaviors;assembly=Cinerama"
-	xmlns:prismBehaviors="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
+	xmlns:utils="clr-namespace:Cinerama.Utils;assembly=Cinerama"
 	x:Class="Cinerama.Views.UpcomingMoviesPage"
 	Title="{Binding Title}">
 
@@ -58,7 +59,8 @@
 										RetryCount="2"
 										LoadingPlaceholder="poster_placeholder.png"
 										Source="{Binding PosterPath, 
-												Converter={StaticResource PosterPathConverter}}"/>
+												Converter={StaticResource ImagePathConverter},
+												ConverterParameter={x:Static utils:DatabaseApiConstants.SMALL_POSTER_SIZE}}"/>
 									<Label Grid.Row="0" Grid.Column="1"
 										Margin="15,10,15,0"
 										HorizontalOptions="Start"
