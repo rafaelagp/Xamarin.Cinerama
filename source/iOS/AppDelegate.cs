@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-using Foundation;
+﻿using Foundation;
+using Microsoft.Practices.Unity;
+using Prism.Unity;
 using UIKit;
 
 namespace Cinerama.iOS
@@ -17,6 +15,13 @@ namespace Cinerama.iOS
 			LoadApplication(new App(new PrismInitializer()));
 
 			return base.FinishedLaunching(app, options);
+		}
+	}
+
+	public class PrismInitializer : IPlatformInitializer
+	{
+		public void RegisterTypes(IUnityContainer container)
+		{
 		}
 	}
 }

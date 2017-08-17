@@ -1,7 +1,8 @@
 ﻿using Android.App;
 using Android.Content.PM;
 using Android.OS;
-using Cinerama.Droid.Utils;
+using Microsoft.Practices.Unity;
+using Prism.Unity;
 
 namespace Cinerama.Droid
 {
@@ -18,6 +19,13 @@ namespace Cinerama.Droid
 			global::Xamarin.Forms.Forms.Init(this, bundle);
 
 			LoadApplication(new App(new PrismInitializer()));
+		}
+	}
+
+	public class PrismInitializer : IPlatformInitializer
+	{
+		public void RegisterTypes(IUnityContainer container)
+		{
 		}
 	}
 }
