@@ -7,52 +7,48 @@
 	Title="{Binding Movie.Title}">
 	
 	<ContentPage.Content>
-		<Frame Margin="10,7.5"
-			Padding="0"
-			CornerRadius="6"
-			HorizontalOptions="Fill"
-			VerticalOptions="Fill"
-			BackgroundColor="#3F424B">
-			<Grid ColumnSpacing="0"
-				RowSpacing="1">
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="95"/>
-					<ColumnDefinition Width="*"/>
-				</Grid.ColumnDefinitions>
-				<Grid.RowDefinitions>
-					<RowDefinition Height="2*"/>
-					<RowDefinition Height="2*"/>
-					<RowDefinition Height="*"/>
-				</Grid.RowDefinitions>
-
-				<ffimageloading:CachedImage Grid.RowSpan="3" Grid.Column="0"
-					HorizontalOptions="Start"
+		<ScrollView Orientation="Vertical">
+			<StackLayout Orientation="Vertical">
+				<Frame Margin="10,10,10,5"
+					Padding="0"
+					CornerRadius="6"
+					HorizontalOptions="Fill"
 					VerticalOptions="Fill"
-					Aspect="AspectFit"
-					RetryDelay="5000"
-					RetryCount="2"
-					LoadingPlaceholder="poster_placeholder.png"
-					Source="{Binding Movie.PosterPath, 
-							Converter={StaticResource PosterPathConverter}}"/>
-				<Label Grid.Row="0" Grid.Column="1"
-					Margin="15,10,15,0"
-					HorizontalOptions="Start"
-					VerticalOptions="Start"
-					FontSize="18"
-					FontAttributes="Bold"
-					TextColor="White"
-					Text="{Binding Movie.Title}"/>
-				<Label Grid.Row="1" Grid.Column="1"
-					Margin="15,0,15,0"
-					HorizontalOptions="Start"
-					VerticalOptions="Center"
-					Text="{Binding Movie.GenreNames}" />
-				<Label Grid.Row="2" Grid.Column="1"
-					Margin="15,0,15,10"
-					HorizontalOptions="Start"
-					VerticalOptions="End"
-					Text="{Binding Movie.,ReleaseDate, StringFormat='{0:yyyy/MM/dd}'}"/>
-			</Grid>
-		</Frame>
+					BackgroundColor="#3F424B">
+					<StackLayout Margin="0"
+						Padding="0"
+						Spacing="1"
+						HorizontalOptions="Fill"
+						VerticalOptions="Fill"
+						Orientation="Vertical">
+						<ffimageloading:CachedImage
+							HorizontalOptions="FillAndExpand"
+							VerticalOptions="FillAndExpand"
+							Aspect="AspectFit"
+							RetryDelay="10000"
+							RetryCount="2"
+							LoadingPlaceholder="poster_placeholder.png"
+							Source="{Binding Movie.PosterPath, 
+									Converter={StaticResource PosterPathConverter}}"/>
+						<Label
+							Margin="15,10"
+							HorizontalOptions="CenterAndExpand"
+							VerticalOptions="StartAndExpand"
+							Text="{Binding Movie.Overview}"/>
+						<Label
+							Margin="15,10"
+							HorizontalOptions="CenterAndExpand"
+							VerticalOptions="StartAndExpand"
+							Text="{Binding Movie.GenreNames}" />
+						<Label Margin="15,10"
+							HorizontalOptions="CenterAndExpand"
+							VerticalOptions="StartAndExpand"
+							Text="{Binding Movie.ReleaseDate, StringFormat='{0:yyyy/MM/dd}'}"/>
+					</StackLayout>
+				</Frame>
+				<!-- fix for frame's Bottom margin not working -->
+				<BoxView HeightRequest="1" BackgroundColor="Transparent"/>
+			</StackLayout>
+		</ScrollView>
 	</ContentPage.Content>
 </ContentPage>

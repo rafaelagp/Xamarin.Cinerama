@@ -54,7 +54,7 @@
 										HorizontalOptions="Start"
 										VerticalOptions="Fill"
 										Aspect="AspectFit"
-										RetryDelay="5000"
+										RetryDelay="10000"
 										RetryCount="2"
 										LoadingPlaceholder="poster_placeholder.png"
 										Source="{Binding PosterPath, 
