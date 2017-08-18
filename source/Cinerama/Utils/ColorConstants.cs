@@ -8,5 +8,6 @@ namespace Cinerama.Utils
 		public static Color Frame = Color.FromHex("#3F424B");
 		public static Color NavigationBarBackground = Color.FromHex("#383838");
 		public static Color SmallText = Color.FromHex("#B7B8BB");
+		public static Color Accent = Color.FromHex("#FF4081");
 	}
 }

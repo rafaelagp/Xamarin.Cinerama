@@ -40,7 +40,6 @@
 								Aspect="AspectFit"
 								RetryDelay="10000"
 								RetryCount="2"
-								BackgroundColor="{x:Static utils:ColorConstants.NavigationBarBackground}"
 								Source="{Binding PosterPath, 
 										Converter={StaticResource ImagePathConverter},
 										ConverterParameter={x:Static utils:DatabaseApiConstants.SMALL_POSTER_SIZE}}"/>
@@ -93,7 +92,6 @@
 								Aspect="AspectFill"
 								RetryDelay="10000"
 								RetryCount="2"
-								BackgroundColor="{x:Static utils:ColorConstants.NavigationBarBackground}"
 								Source="{Binding BackdropPath, 
 										Converter={StaticResource ImagePathConverter},
 										ConverterParameter={x:Static utils:DatabaseApiConstants.MEDIUM_BACKDROP_SIZE}}"/>
@@ -145,7 +143,8 @@
 			</ListView>
 			<ActivityIndicator Grid.Row="0"
 				Margin="0,0,0,10"
-				HeightRequest="40"
+				HeightRequest="40"			
+				Color="{x:Static utils:ColorConstants.Accent}"
 				HorizontalOptions="CenterAndExpand"
 				VerticalOptions="EndAndExpand"
 				IsRunning="{Binding IsBusy}"

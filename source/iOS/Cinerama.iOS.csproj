@@ -153,6 +153,7 @@
     <Compile Include="AppDelegate.cs" />
     <Compile Include="Renderers\NoSelectionViewCellRenderer.cs" />
     <Compile Include="Utils\DeviceOrientation.cs" />
+    <Compile Include="Renderers\ColorfulActivityIndicatorRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Cinerama\Cinerama.csproj">
