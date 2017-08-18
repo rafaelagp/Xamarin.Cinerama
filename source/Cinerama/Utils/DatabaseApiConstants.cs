@@ -56,6 +56,10 @@
 		/// A large size poster parameter.
 		/// </summary>
 		public const string LARGE_POSTER_SIZE = "w500";
+		/// <summary>
+		/// A medium size backdrop parameter.
+		/// </summary>
+		public const string MEDIUM_BACKDROP_SIZE = "w780";
 		#endregion
 
 		#region Language Parameters

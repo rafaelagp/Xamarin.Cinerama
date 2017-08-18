@@ -9,7 +9,7 @@
 	<Application.Resources>
 		<ResourceDictionary>
 			<converters:MovieImagePathValueConverter x:Key="ImagePathConverter"/>
-			<OnPlatform x:Key="SmallTextFontSize" x:TypeArguments="Font" iOS="13" />
+			<OnPlatform x:Key="SmallTextFontSize" x:TypeArguments="Font" iOS="14" />
 
 			<Style
 				x:Key="SmallTextStyle"

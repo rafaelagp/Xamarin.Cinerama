@@ -25,12 +25,25 @@ namespace Cinerama.Views
 			switch (orientation)
 			{
 				case PageOrientation.Horizontal:
-					ListView.RowHeight = 250;
+					SetListViewRowHeight(265, 225);
 					ListView.ItemTemplate = LandscapeDataTemplate;
 					break;
 				case PageOrientation.Vertical:
 					ListView.RowHeight = 150;
 					ListView.ItemTemplate = PortraitDataTemplate;
+					break;
+			}
+		}
+
+		void SetListViewRowHeight(int iosSize, int androidSize)
+		{
+			switch (Device.RuntimePlatform)
+			{
+				case Device.Android:
+					ListView.RowHeight = androidSize;
+					break;
+				case Device.iOS:
+					ListView.RowHeight = iosSize;
 					break;
 			}
 		}

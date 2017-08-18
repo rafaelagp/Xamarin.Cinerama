@@ -12,8 +12,8 @@ namespace Cinerama.ValueConverters
 	{
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
-			var filename = value as string;
 			var size = parameter != null ? parameter as string : DatabaseApiConstants.SMALL_POSTER_SIZE;
+			var filename = value as string;
 
 			if (!string.IsNullOrWhiteSpace(filename))
 			{
@@ -21,7 +21,7 @@ namespace Cinerama.ValueConverters
 				return url;
 			}
 
-			return "poster_placeholder.png";
+			return string.Empty;
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

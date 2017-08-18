@@ -29,7 +29,7 @@
 							Aspect="AspectFit"
 							RetryDelay="10000"
 							RetryCount="2"
-							LoadingPlaceholder="poster_placeholder.png"
+							BackgroundColor="{x:Static utils:ColorConstants.NavigationBarBackground}"
 							Source="{Binding Movie.PosterPath, 
 									Converter={StaticResource ImagePathConverter},
 									ConverterParameter={x:Static utils:DatabaseApiConstants.LARGE_POSTER_SIZE}}"/>

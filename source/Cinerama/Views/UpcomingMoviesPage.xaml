@@ -40,7 +40,7 @@
 								Aspect="AspectFit"
 								RetryDelay="10000"
 								RetryCount="2"
-								LoadingPlaceholder="poster_placeholder.png"
+								BackgroundColor="{x:Static utils:ColorConstants.NavigationBarBackground}"
 								Source="{Binding PosterPath, 
 										Converter={StaticResource ImagePathConverter},
 										ConverterParameter={x:Static utils:DatabaseApiConstants.SMALL_POSTER_SIZE}}"/>
@@ -78,7 +78,7 @@
 						<Grid ColumnSpacing="0"
 							RowSpacing="1">
 							<Grid.ColumnDefinitions>
-								<ColumnDefinition Width="95"/>
+								<ColumnDefinition Width="1.7*"/>
 								<ColumnDefinition Width="*"/>
 							</Grid.ColumnDefinitions>
 							<Grid.RowDefinitions>
@@ -93,10 +93,10 @@
 								Aspect="AspectFill"
 								RetryDelay="10000"
 								RetryCount="2"
-								LoadingPlaceholder="poster_placeholder.png"
-								Source="{Binding PosterPath, 
+								BackgroundColor="{x:Static utils:ColorConstants.NavigationBarBackground}"
+								Source="{Binding BackdropPath, 
 										Converter={StaticResource ImagePathConverter},
-										ConverterParameter={x:Static utils:DatabaseApiConstants.SMALL_POSTER_SIZE}}"/>
+										ConverterParameter={x:Static utils:DatabaseApiConstants.MEDIUM_BACKDROP_SIZE}}"/>
 							<Label Grid.Row="0" Grid.Column="1"
 								Margin="15,10,15,0"
 								HorizontalOptions="Start"
