@@ -7,21 +7,6 @@
 	x:Class="Cinerama.MovieDetailPage"
 	Title="{Binding Movie.Title}">
 
-	<ContentPage.Resources>
-		<ResourceDictionary>
-			<OnPlatform x:Key="MediumTextFontSize" x:TypeArguments="Font" Android="16" iOS="15" />
-
-			<Style
-				x:Key="MediumTextStyle"
-				TargetType="Label"
-				BaseResourceKey="SmallTextStyle">
-				<Setter 
-					Property="Font"
-                    Value="{StaticResource MediumTextFontSize}" />
-			</Style>
-		</ResourceDictionary>
-	</ContentPage.Resources>
-	
 	<ContentPage.Content>
 		<ScrollView Orientation="Vertical"
 			BackgroundColor="{x:Static utils:ColorConstants.Background}">
@@ -50,24 +35,21 @@
 									ConverterParameter={x:Static utils:DatabaseApiConstants.LARGE_POSTER_SIZE}}"/>
 						<Label
 							Margin="15,10"
-							Style="{StaticResource MediumTextStyle}"
 							HorizontalOptions="CenterAndExpand"
 							VerticalOptions="StartAndExpand"
-							Text="{Binding Movie.Overview}"/>
+							FormattedText="{Binding FormattedOverview}"/>
 						<Label
 							Margin="15,10"
-							Style="{StaticResource MediumTextStyle}"
 							HorizontalOptions="CenterAndExpand"
 							VerticalOptions="StartAndExpand"
-							Text="{Binding Movie.GenreNames}" />
+							FormattedText="{Binding FormattedGenres}"/>
 						<Label Margin="15,10"
-							Style="{StaticResource MediumTextStyle}"
 							HorizontalOptions="CenterAndExpand"
 							VerticalOptions="StartAndExpand"
-							Text="{Binding Movie.ReleaseDate, StringFormat='{0:yyyy/MM/dd}'}"/>
+							FormattedText="{Binding FormattedReleaseDate}"/>
 					</StackLayout>
 				</Frame>
-				<!-- fix for frame's Bottom margin not working -->
+				<!-- fix for frame's bottom margin not working -->
 				<BoxView HeightRequest="1" BackgroundColor="Transparent"/>
 			</StackLayout>
 		</ScrollView>
