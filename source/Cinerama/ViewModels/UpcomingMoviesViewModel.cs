@@ -79,7 +79,7 @@ namespace Cinerama.ViewModels
 					{
 						Genres.AddRange(await service.GetMovieGenresAsync());
 					}
-					// found no way to filter the query for movies without poster and backdrop images
+					// found no way to filter through query
 					var movies = await service.GetUpcomingMoviesAsync(page);
 					movies.Where(x => !string.IsNullOrWhiteSpace(x.PosterPath) 
 					             && !string.IsNullOrWhiteSpace(x.BackdropPath))

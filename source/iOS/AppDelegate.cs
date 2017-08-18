@@ -1,4 +1,6 @@
-﻿using FFImageLoading.Forms.Touch;
+﻿using Cinerama.Interfaces;
+using Cinerama.iOS.Utils;
+using FFImageLoading.Forms.Touch;
 using Foundation;
 using Microsoft.Practices.Unity;
 using Prism.Unity;
@@ -24,6 +26,7 @@ namespace Cinerama.iOS
 	{
 		public void RegisterTypes(IUnityContainer container)
 		{
+			container.RegisterType<IDeviceOrientation, DeviceOrientation>(new ContainerControlledLifetimeManager());
 		}
 	}
 }

@@ -25,6 +25,7 @@ namespace Cinerama
 			Container.RegisterType<IDatabaseApiService, DatabaseApiService>(
 				new ContainerControlledLifetimeManager());
 
+			Container.RegisterTypeForNavigation<CustomContentPage>();
 			Container.RegisterTypeForNavigation<CustomNavigationPage>();
 			Container.RegisterTypeForNavigation<UpcomingMoviesPage, UpcomingMoviesViewModel>();
 			Container.RegisterTypeForNavigation<MovieDetailPage, MovieDetailViewModel>();

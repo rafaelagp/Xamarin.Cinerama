@@ -1,6 +1,8 @@
 ﻿using Android.App;
 using Android.Content.PM;
 using Android.OS;
+using Cinerama.Droid.Utils;
+using Cinerama.Interfaces;
 using Microsoft.Practices.Unity;
 using Prism.Unity;
 
@@ -26,6 +28,7 @@ namespace Cinerama.Droid
 	{
 		public void RegisterTypes(IUnityContainer container)
 		{
+			container.RegisterType<IDeviceOrientation, DeviceOrientation>(new ContainerControlledLifetimeManager());
 		}
 	}
 }
