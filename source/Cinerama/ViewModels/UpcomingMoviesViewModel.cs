@@ -6,7 +6,6 @@ using System;
 using Cinerama.Utils;
 using Cinerama.Interfaces;
 using Cinerama.Services;
-using System.Linq;
 using System.Collections.Generic;
 using Prism.Commands;
 
@@ -79,9 +78,7 @@ namespace Cinerama.ViewModels
 					}
 
 					var movies = await service.GetUpcomingMoviesAsync(page);
-					movies.OrderBy(x => x.ReleaseDate)
-					      .ToList()
-					      .ForEach(AddUpcomingMovie);
+					movies.ForEach(AddUpcomingMovie);
 					
 					_lastLoadedMovie = Movies[_lastLoadedMovieIndex];
 					_lastLoadedMovieIndex += movies.Count;
