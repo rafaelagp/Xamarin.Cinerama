@@ -8,6 +8,7 @@ using Cinerama.Interfaces;
 using Cinerama.Services;
 using System.Collections.Generic;
 using Prism.Commands;
+using System.Linq;
 
 namespace Cinerama.ViewModels
 {
@@ -16,7 +17,8 @@ namespace Cinerama.ViewModels
 		int _lastLoadedPage = 1;
 		bool _hasLoadedLastPage;
 		bool _shouldLoadMore;
-		int _lastLoadedMovieIndex = 9; // Position of the movie list where LoadMoreCommand should be called
+		int _loadMoreMovieIndex = 9; // Position of the movie list where LoadMoreCommand should be called
+		MovieModel _loadMoreMovie;
 		MovieModel _lastLoadedMovie;
 		INavigationService _navigationService;
 		IDatabaseApiService _tmdbService;
@@ -46,10 +48,11 @@ namespace Cinerama.ViewModels
 			await _navigationService.NavigateAsync(nameof(MovieDetailPage),
 												   new NavigationParameters { { "Movie", movie } });
 		}
-		// TODO test more extensively on iOS & test for connectivity crashes
+
 		async void LoadMoreUpcomingMovies(MovieModel item)
 		{
-			if (item == _lastLoadedMovie && _shouldLoadMore && !_hasLoadedLastPage)
+			if ((item == _loadMoreMovie || item == _lastLoadedMovie)
+			    && _shouldLoadMore && !_hasLoadedLastPage)
 			{
 				await AddUpcomingMoviesAsync(++_lastLoadedPage);
 				return;
@@ -76,12 +79,16 @@ namespace Cinerama.ViewModels
 					{
 						Genres.AddRange(await service.GetMovieGenresAsync());
 					}
-
+					// found no way to filter the query for movies without poster and backdrop images
 					var movies = await service.GetUpcomingMoviesAsync(page);
-					movies.ForEach(AddUpcomingMovie);
+					movies.Where(x => !string.IsNullOrWhiteSpace(x.PosterPath) 
+					             && !string.IsNullOrWhiteSpace(x.BackdropPath))
+					      .ToList()
+					      .ForEach(AddUpcomingMovie);
 					
-					_lastLoadedMovie = Movies[_lastLoadedMovieIndex];
-					_lastLoadedMovieIndex += movies.Count;
+					_loadMoreMovie = Movies[_loadMoreMovieIndex];
+					_loadMoreMovieIndex += movies.Count;
+					_lastLoadedMovie = Movies.Last();
 					_hasLoadedLastPage = movies.Count == 0;
 					_shouldLoadMore = false;
 				}
