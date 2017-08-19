@@ -8,7 +8,7 @@ namespace Cinerama
 		public CustomNavigationPage(Page page) : base(page)
 		{
 			BarBackgroundColor = ColorConstants.NavigationBarBackground;
-			BarTextColor = Color.White;
+			BarTextColor = ColorConstants.Accent;
 		}
 	}
 }

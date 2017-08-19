@@ -17,7 +17,7 @@ namespace Cinerama.ViewModels
 		int _lastLoadedPage = 1;
 		bool _hasLoadedLastPage;
 		bool _shouldLoadMore;
-		int _loadMoreMovieIndex = 9; // Position of the movie list where LoadMoreCommand should be called
+		int _loadMoreMovieIndex; // Position of the movie list where LoadMoreCommand should be called
 		MovieModel _loadMoreMovie;
 		MovieModel _lastLoadedMovie;
 		INavigationService _navigationService;
@@ -54,6 +54,7 @@ namespace Cinerama.ViewModels
 			if ((item == _loadMoreMovie || item == _lastLoadedMovie)
 			    && _shouldLoadMore && !_hasLoadedLastPage)
 			{
+				_shouldLoadMore = false;
 				await AddUpcomingMoviesAsync(++_lastLoadedPage);
 				return;
 			}
@@ -81,16 +82,23 @@ namespace Cinerama.ViewModels
 					}
 					// found no way to filter through query
 					var movies = await service.GetUpcomingMoviesAsync(page);
-					movies.Where(x => !string.IsNullOrWhiteSpace(x.PosterPath) 
-					             && !string.IsNullOrWhiteSpace(x.BackdropPath))
-					      .ToList()
-					      .ForEach(AddUpcomingMovie);
+					movies = movies.Where(x => !string.IsNullOrWhiteSpace(x.PosterPath)
+					                      && !string.IsNullOrWhiteSpace(x.BackdropPath)).ToList();
+					movies.ForEach(AddUpcomingMovie);
+
+					if (_loadMoreMovieIndex == 0)
+					{
+						_loadMoreMovieIndex = Movies.Count / 2;
+						_loadMoreMovie = Movies[_loadMoreMovieIndex];
+					}
+					else
+					{
+						_loadMoreMovieIndex += movies.Count - 1;
+						_loadMoreMovie = Movies[_loadMoreMovieIndex];
+					}
 					
-					_loadMoreMovie = Movies[_loadMoreMovieIndex];
-					_loadMoreMovieIndex += movies.Count;
 					_lastLoadedMovie = Movies.Last();
 					_hasLoadedLastPage = movies.Count == 0;
-					_shouldLoadMore = false;
 				}
 			}
 			catch (Exception ex)
