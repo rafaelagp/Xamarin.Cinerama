@@ -15,7 +15,7 @@ namespace Cinerama.Views
 			SetLayout(_deviceOrientation.GetOrientation());
 		}
 
-		void OnOrientationChange(object sender, PageOrientationEventArgs e)
+		void OrientationChanged(object sender, PageOrientationEventArgs e)
 		{
 			SetLayout(e.Orientation);
 		}

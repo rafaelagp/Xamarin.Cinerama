@@ -8,7 +8,7 @@
 	xmlns:utils="clr-namespace:Cinerama.Utils;assembly=Cinerama"
 	xmlns:views="clr-namespace:Cinerama.Views;assembly=Cinerama"
 	x:Class="Cinerama.Views.UpcomingMoviesPage"
-	OnOrientationChanged="OnOrientationChange"
+	OnOrientationChanged="OrientationChanged"
 	Title="{Binding Title}">
 
 	<ContentPage.Resources>
