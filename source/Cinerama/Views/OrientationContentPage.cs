@@ -23,14 +23,14 @@ namespace Cinerama.Views
 	/// Custom content page with event to listen for device orientation changes.
 	/// By Norman Mackay https://forums.xamarin.com/discussion/88646/detecting-page-orientation-change-for-contentpages
 	/// </summary>
-	public class CustomContentPage : ContentPage
+	public class OrientationContentPage : ContentPage
 	{
 		double _width;
 		double _height;
 
 		public event EventHandler<PageOrientationEventArgs> OnOrientationChanged = (e, a) => { };
 
-		public CustomContentPage()
+		public OrientationContentPage()
 		{
 			Init();
 		}

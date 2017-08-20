@@ -3,7 +3,7 @@ using Xamarin.Forms;
 
 namespace Cinerama.Views
 {
-	public partial class UpcomingMoviesPage : CustomContentPage
+	public partial class UpcomingMoviesPage : OrientationContentPage
 	{
 		IDeviceOrientation _deviceOrientation;
 		

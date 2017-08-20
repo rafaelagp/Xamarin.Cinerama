@@ -3,9 +3,9 @@ using Xamarin.Forms;
 
 namespace Cinerama
 {
-	public class CustomNavigationPage : NavigationPage
+	public class ThemedNavigationPage : NavigationPage
 	{
-		public CustomNavigationPage(Page page) : base(page)
+		public ThemedNavigationPage(Page page) : base(page)
 		{
 			BarBackgroundColor = ColorConstants.NavigationBarBackground;
 			BarTextColor = ColorConstants.Accent;

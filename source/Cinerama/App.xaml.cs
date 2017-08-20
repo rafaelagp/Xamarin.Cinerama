@@ -17,7 +17,7 @@ namespace Cinerama
 		protected override void OnInitialized()
 		{
 			InitializeComponent();
-			NavigationService.NavigateAsync(new Uri("/CustomNavigationPage/UpcomingMoviesPage", UriKind.Absolute));
+			NavigationService.NavigateAsync(new Uri("/ThemedNavigationPage/UpcomingMoviesPage", UriKind.Absolute));
 		}
 
 		protected override void RegisterTypes()
@@ -25,8 +25,8 @@ namespace Cinerama
 			Container.RegisterType<IDatabaseApiService, DatabaseApiService>(
 				new ContainerControlledLifetimeManager());
 
-			Container.RegisterTypeForNavigation<CustomContentPage>();
-			Container.RegisterTypeForNavigation<CustomNavigationPage>();
+			Container.RegisterTypeForNavigation<ThemedNavigationPage>();
+			Container.RegisterTypeForNavigation<OrientationContentPage>();
 			Container.RegisterTypeForNavigation<UpcomingMoviesPage, UpcomingMoviesViewModel>();
 			Container.RegisterTypeForNavigation<MovieDetailPage, MovieDetailViewModel>();
 		}
