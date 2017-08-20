@@ -154,6 +154,7 @@
     <Compile Include="Renderers\NoSelectionViewCellRenderer.cs" />
     <Compile Include="Utils\DeviceOrientation.cs" />
     <Compile Include="Renderers\ColorfulActivityIndicatorRenderer.cs" />
+    <Compile Include="Renderers\MultilineLabelRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Cinerama\Cinerama.csproj">

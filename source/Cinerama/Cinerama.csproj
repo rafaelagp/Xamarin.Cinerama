@@ -44,5 +44,6 @@
     <Folder Include="Services\" />
     <Folder Include="Interfaces\" />
     <Folder Include="Behaviors\" />
+    <Folder Include="Controls\" />
   </ItemGroup>
 </Project>
