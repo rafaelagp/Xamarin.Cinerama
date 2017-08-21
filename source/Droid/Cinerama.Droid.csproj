@@ -162,12 +162,20 @@
     <AndroidResource Include="Resources\drawable-hdpi\icon.png" />
     <AndroidResource Include="Resources\drawable-xhdpi\icon.png" />
     <AndroidResource Include="Resources\drawable-xxhdpi\icon.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\icon.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\splash_background.9.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\splash_background.9.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\splash_background.9.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\splash_background.9.png" />
+    <AndroidResource Include="Resources\drawable\splashscreen.xml" />
+    <AndroidResource Include="Resources\values\colors.xml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\" />
     <Folder Include="Utils\" />
     <Folder Include="Renderers\" />
     <Folder Include="Resources\drawable\" />
+    <Folder Include="Resources\drawable-xxxhdpi\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Cinerama\Cinerama.csproj">
