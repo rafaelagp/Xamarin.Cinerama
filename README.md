@@ -10,6 +10,6 @@ Prism.Unity - To help in keeping with the MVVM pattern, Prism with Unity depende
 FFImageLoading - Daniel Luberda's library is another staple at any Xamarin project. Deals very well with image caching and has a lot useful built in features like async download of image urls.
 Xam.Plugin.Connectivity - A simple cross-platform abstraction for handling connectivity in class library projects, thanks to James Montemagno.
 
-#Other
+### Other
 .NETStandard - PCL is on it's way out, so I opted for a .NETStandard class library instead.
 OrientationContentPage - Custom code behind by Norman McKay to handle page orientation changes.
