@@ -144,11 +144,23 @@
 			<ActivityIndicator Grid.Row="0"
 				Margin="0,0,0,10"
 				HeightRequest="40"			
+				HorizontalOptions="Center"
+				VerticalOptions="End"
 				Color="{x:Static utils:ColorConstants.Accent}"
-				HorizontalOptions="CenterAndExpand"
-				VerticalOptions="EndAndExpand"
 				IsRunning="{Binding IsBusy}"
 				IsVisible="{Binding IsBusy}"/>
+			<Label Grid.Row="0"
+				HeightRequest="30"	
+				HorizontalOptions="Fill"
+				VerticalOptions="End"
+				HorizontalTextAlignment="Center"
+				VerticalTextAlignment="Center"
+				BackgroundColor="{x:Static utils:ColorConstants.NavigationBarBackground}"
+				TextColor="{x:Static utils:ColorConstants.Accent}"
+				FontSize="20"
+				FontAttributes="Bold"
+				Text="There is no internet connection :("
+				IsVisible="{Binding IsNotConnected}"/>
 		</Grid>
 	</ContentPage.Content>
 </views:OrientationContentPage>

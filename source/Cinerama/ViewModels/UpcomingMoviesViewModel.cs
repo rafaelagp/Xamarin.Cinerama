@@ -9,10 +9,13 @@ using Cinerama.Services;
 using System.Collections.Generic;
 using Prism.Commands;
 using System.Linq;
+using Plugin.Connectivity;
+using Plugin.Connectivity.Abstractions;
+using System.Threading;
 
 namespace Cinerama.ViewModels
 {
-	public class UpcomingMoviesViewModel : BaseViewModel
+	public class UpcomingMoviesViewModel : BaseViewModel, IDestructible
 	{
 		int _lastLoadedPage = 1;
 		bool _hasLoadedLastPage;
@@ -20,9 +23,11 @@ namespace Cinerama.ViewModels
 		int _loadMoreMovieIndex; // Position of the movie list where LoadMoreCommand should be called
 		MovieModel _loadMoreMovie;
 		MovieModel _lastLoadedMovie;
+		CancellationTokenSource _tokenSource;
 		INavigationService _navigationService;
 		IDatabaseApiService _tmdbService;
 
+		public bool IsNotConnected { get; set; }
 		public List<GenreModel> Genres { get; set; }
 		public ObservableCollection<MovieModel> Movies { get; set; }
 
@@ -33,14 +38,41 @@ namespace Cinerama.ViewModels
 		{
 			_navigationService = navigationService;
 			_tmdbService = tmdbService;
-
+			_tokenSource = new CancellationTokenSource();
+			IsNotConnected = !CrossConnectivity.Current.IsConnected;
 			Genres = new List<GenreModel>();
 			Movies = new ObservableCollection<MovieModel>();
-
 			ItemTappedCommand = new DelegateCommand<MovieModel>(NavigateToMovieDetail);
 			LoadMoreCommand = new DelegateCommand<MovieModel>(LoadMoreUpcomingMovies);
-
+			CrossConnectivity.Current.ConnectivityChanged += OnConnectivityChanged;
 			Task.Run(async () => await AddUpcomingMoviesAsync(_lastLoadedPage));
+		}
+
+		public void Destroy()
+		{
+			CrossConnectivity.Current.ConnectivityChanged -= OnConnectivityChanged;
+		}
+
+		async void OnConnectivityChanged(object sender, ConnectivityChangedEventArgs e)
+		{
+			if (e.IsConnected)
+			{
+				IsNotConnected = false;
+				await AddUpcomingMoviesAsync(++_lastLoadedPage);
+			}
+			else
+			{
+				IsNotConnected = true;
+				_shouldLoadMore |= !_hasLoadedLastPage;
+				_loadMoreMovie = _lastLoadedMovie = null;
+
+				if (!_tokenSource.IsCancellationRequested)
+				{
+					_tokenSource.Cancel();
+					_tokenSource.Dispose();
+					_tokenSource = new CancellationTokenSource();
+				}
+			}
 		}
 
 		async void NavigateToMovieDetail(MovieModel movie)
@@ -51,12 +83,15 @@ namespace Cinerama.ViewModels
 
 		async void LoadMoreUpcomingMovies(MovieModel item)
 		{
-			if ((item == _loadMoreMovie || item == _lastLoadedMovie)
-			    && _shouldLoadMore && !_hasLoadedLastPage)
+			if (!IsNotConnected)
 			{
-				_shouldLoadMore = false;
-				await AddUpcomingMoviesAsync(++_lastLoadedPage);
-				return;
+				var movieConditions = _loadMoreMovie == null || item == _loadMoreMovie || item == _lastLoadedMovie;
+				if (movieConditions && _shouldLoadMore && !_hasLoadedLastPage)
+				{
+					_shouldLoadMore = false;
+					await AddUpcomingMoviesAsync(++_lastLoadedPage);
+					return;
+				}
 			}
 
 			_shouldLoadMore = true;
@@ -74,31 +109,38 @@ namespace Cinerama.ViewModels
 
 			try
 			{
-				using (var service = new DatabaseApiService())
+				if (!IsNotConnected)
 				{
-					if (Genres.Count == 0)
+					using (var service = new DatabaseApiService())
 					{
-						Genres.AddRange(await service.GetMovieGenresAsync());
-					}
-					// found no way to filter through query
-					var movies = await service.GetUpcomingMoviesAsync(page);
-					movies = movies.Where(x => !string.IsNullOrWhiteSpace(x.PosterPath)
-					                      && !string.IsNullOrWhiteSpace(x.BackdropPath)).ToList();
-					movies.ForEach(AddUpcomingMovie);
+						if (Genres.Count == 0)
+						{
+							Genres.AddRange(await service.GetMovieGenresAsync(_tokenSource.Token));
+						}
 
-					if (_loadMoreMovieIndex == 0)
-					{
-						_loadMoreMovieIndex = Movies.Count / 2;
-						_loadMoreMovie = Movies[_loadMoreMovieIndex];
+						// found no way to filter through query
+						var movies = await service.GetUpcomingMoviesAsync(_tokenSource.Token, page);
+						if (!_tokenSource.IsCancellationRequested)
+						{
+							movies = movies.Where(x => !string.IsNullOrWhiteSpace(x.PosterPath)
+							                      && !string.IsNullOrWhiteSpace(x.BackdropPath)).ToList();
+							movies.ForEach(AddUpcomingMovie);
+							
+							if (_loadMoreMovieIndex == 0)
+							{
+								_loadMoreMovieIndex = Movies.Count / 2;
+								_loadMoreMovie = Movies[_loadMoreMovieIndex];
+							}
+							else
+							{
+								_loadMoreMovieIndex += movies.Count - 1;
+								_loadMoreMovie = Movies[_loadMoreMovieIndex];
+							}
+							
+							_lastLoadedMovie = Movies.Last();
+							_hasLoadedLastPage = movies.Count == 0;
+						}
 					}
-					else
-					{
-						_loadMoreMovieIndex += movies.Count - 1;
-						_loadMoreMovie = Movies[_loadMoreMovieIndex];
-					}
-					
-					_lastLoadedMovie = Movies.Last();
-					_hasLoadedLastPage = movies.Count == 0;
 				}
 			}
 			catch (Exception ex)
