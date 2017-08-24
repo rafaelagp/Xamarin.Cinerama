@@ -11,5 +11,6 @@ None.
 * Xam.Plugin.Connectivity - A simple cross-platform abstraction for handling connectivity in class library projects, thanks to James Montemagno.
 
 ### Other
-* .NETStandard - PCL is on it's way out, so I opted for a .NETStandard class library instead.
+* .NETStandard - PCL is on it's way out, so I opted for a .NETStandard 1.6 class library instead.
 * OrientationContentPage - Custom code behind by Norman McKay to handle page orientation changes.
+* ListViewPagingBehavior - An infinite scrolling behavior developed by Rasmus Christensen.
