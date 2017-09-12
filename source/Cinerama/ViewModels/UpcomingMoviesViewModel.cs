@@ -111,35 +111,32 @@ namespace Cinerama.ViewModels
 			{
 				if (!IsNotConnected)
 				{
-					using (var service = new DatabaseApiService())
+					if (Genres.Count == 0)
 					{
-						if (Genres.Count == 0)
-						{
-							Genres.AddRange(await service.GetMovieGenresAsync(_tokenSource.Token));
-						}
+						Genres.AddRange(await _tmdbService.GetMovieGenresAsync(_tokenSource.Token));
+					}
 
-						// found no way to filter through query
-						var movies = await service.GetUpcomingMoviesAsync(_tokenSource.Token, page);
-						if (!_tokenSource.IsCancellationRequested)
+					// found no way to filter through query
+					var movies = await _tmdbService.GetUpcomingMoviesAsync(_tokenSource.Token, page);
+					if (!_tokenSource.IsCancellationRequested)
+					{
+						movies = movies.Where(x => !string.IsNullOrWhiteSpace(x.PosterPath)
+						                      && !string.IsNullOrWhiteSpace(x.BackdropPath)).ToList();
+						movies.ForEach(AddUpcomingMovie);
+						
+						if (_loadMoreMovieIndex == 0)
 						{
-							movies = movies.Where(x => !string.IsNullOrWhiteSpace(x.PosterPath)
-							                      && !string.IsNullOrWhiteSpace(x.BackdropPath)).ToList();
-							movies.ForEach(AddUpcomingMovie);
-							
-							if (_loadMoreMovieIndex == 0)
-							{
-								_loadMoreMovieIndex = Movies.Count / 2;
-								_loadMoreMovie = Movies[_loadMoreMovieIndex];
-							}
-							else
-							{
-								_loadMoreMovieIndex += movies.Count - 1;
-								_loadMoreMovie = Movies[_loadMoreMovieIndex];
-							}
-							
-							_lastLoadedMovie = Movies.Last();
-							_hasLoadedLastPage = movies.Count == 0;
+							_loadMoreMovieIndex = Movies.Count / 2;
+							_loadMoreMovie = Movies[_loadMoreMovieIndex];
 						}
+						else
+						{
+							_loadMoreMovieIndex += movies.Count - 1;
+							_loadMoreMovie = Movies[_loadMoreMovieIndex];
+						}
+						
+						_lastLoadedMovie = Movies.Last();
+						_hasLoadedLastPage = movies.Count == 0;
 					}
 				}
 			}
