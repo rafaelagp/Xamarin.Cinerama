@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<views:OrientationContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+	xmlns:converters="clr-namespace:Cinerama.ValueConverters;assembly=Cinerama"
+	xmlns:utils="clr-namespace:Cinerama.Utils;assembly=Cinerama"
+	xmlns:views="clr-namespace:Cinerama.Views;assembly=Cinerama"
+	xmlns:controls="clr-namespace:Cinerama.Controls;assembly=Cinerama"
+	x:Class="Cinerama.MovieDetailPage"
+	OnOrientationChanged="OrientationChanged"
+	Title="{Binding Movie.Title}">
+
+	<ContentPage.Resources>
+		<ResourceDictionary>
+			<ScrollView x:Name="PortraitLayout" x:Key="PortraitLayout"
+				Orientation="Vertical"
+				BackgroundColor="{x:Static utils:ColorConstants.Background}">
+				<ContentView>
+					<Frame Margin="10,10,10,10"
+						Padding="0"
+						CornerRadius="6"
+						HorizontalOptions="Fill"
+						VerticalOptions="Fill"
+						BackgroundColor="{x:Static utils:ColorConstants.Frame}">
+						<StackLayout Margin="0"
+							Padding="0"
+							Spacing="1"
+							HorizontalOptions="Fill"
+							VerticalOptions="Fill"
+							Orientation="Vertical">
+							<ffimageloading:CachedImage
+								HorizontalOptions="FillAndExpand"
+								VerticalOptions="FillAndExpand"
+								Aspect="AspectFit"
+								RetryDelay="10000"
+								RetryCount="2"
+								Source="{Binding Movie.PosterPath, 
+										Converter={StaticResource ImagePathConverter},
+										ConverterParameter={x:Static utils:DatabaseApiConstants.LARGE_POSTER_SIZE}}"/>
+							<Label
+								Margin="15,10"
+								HorizontalOptions="CenterAndExpand"
+								VerticalOptions="StartAndExpand"
+								FormattedText="{Binding FormattedOverview}"/>
+							<Label
+								Margin="15,10"
+								HorizontalOptions="CenterAndExpand"
+								VerticalOptions="StartAndExpand"
+								FormattedText="{Binding FormattedGenres}"/>
+							<Label Margin="15,10"
+								HorizontalOptions="CenterAndExpand"
+								VerticalOptions="StartAndExpand"
+								FormattedText="{Binding FormattedReleaseDate}"/>
+						</StackLayout>
+					</Frame>
+				</ContentView>
+			</ScrollView>
+			<ScrollView x:Name="LandscapeLayout" x:Key="LandscapeLayout"
+				Orientation="Horizontal"
+				BackgroundColor="{x:Static utils:ColorConstants.Background}">
+				<ContentView 
+					WidthRequest="900">
+					<Frame Margin="10"
+						Padding="0"
+						CornerRadius="6"
+						HorizontalOptions="Fill"
+						VerticalOptions="Fill"
+						BackgroundColor="{x:Static utils:ColorConstants.Frame}">
+						<Grid Margin="0"
+							Padding="0"
+							ColumnSpacing="0"
+							RowSpacing="1"
+							HorizontalOptions="Fill"
+							VerticalOptions="Fill">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="1.25*"/>
+								<ColumnDefinition Width="*"/>
+							</Grid.ColumnDefinitions>
+							<Grid.RowDefinitions>
+								<RowDefinition Height="4*"/>
+								<RowDefinition Height="2*"/>
+								<RowDefinition Height="*"/>
+							</Grid.RowDefinitions>
+							<ffimageloading:CachedImage Grid.RowSpan="3" Grid.Column="0"
+								HorizontalOptions="Start"
+								VerticalOptions="Fill"
+								Aspect="AspectFit"
+								RetryDelay="10000"
+								RetryCount="2"
+								Source="{Binding Movie.BackdropPath, 
+										Converter={StaticResource ImagePathConverter},
+										ConverterParameter={x:Static utils:DatabaseApiConstants.MEDIUM_BACKDROP_SIZE}}"/>
+							<controls:MultilineLabel Grid.Row="0" Grid.Column="1"
+								Margin="10,10,20,0"
+								HorizontalOptions="Center"
+								VerticalOptions="Start"
+								MaxLines="7"
+								HorizontalTextAlignment="Center"
+								LineBreakMode="TailTruncation"
+								FormattedText="{Binding FormattedOverview}"/>
+							<controls:MultilineLabel Grid.Row="1" Grid.Column="1"
+								Margin="10,0,20,0"
+								HorizontalOptions="Center"
+								VerticalOptions="Center"
+								MaxLines="2"
+								HorizontalTextAlignment="Center"
+								LineBreakMode="TailTruncation"
+								FormattedText="{Binding FormattedGenres}"/>
+							<Label Grid.Row="2" Grid.Column="1"
+								Margin="10,0,20,10"
+								HorizontalOptions="Center"
+								VerticalOptions="End"
+								HorizontalTextAlignment="Center"
+								FormattedText="{Binding FormattedReleaseDate}"/>
+						</Grid>
+					</Frame>
+				</ContentView>
+			</ScrollView>
+		</ResourceDictionary>
+	</ContentPage.Resources>
+</views:OrientationContentPage>

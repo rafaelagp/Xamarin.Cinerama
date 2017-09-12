@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<views:OrientationContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+	xmlns:prismBehaviors="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
+	xmlns:converters="clr-namespace:Cinerama.ValueConverters;assembly=Cinerama"
+	xmlns:behaviors="clr-namespace:Cinerama.Behaviors;assembly=Cinerama"
+	xmlns:utils="clr-namespace:Cinerama.Utils;assembly=Cinerama"
+	xmlns:views="clr-namespace:Cinerama.Views;assembly=Cinerama"
+	x:Class="Cinerama.Views.UpcomingMoviesPage"
+	OnOrientationChanged="OrientationChanged"
+	Title="{Binding Title}">
+
+	<ContentPage.Resources>
+		<ResourceDictionary>
+			<converters:ItemVisibilityEventArgsConverter x:Key="LoadMoreConverter"/>
+			<converters:ItemTappedEventArgsConverter x:Key="ItemTappedConverter"/>
+			<DataTemplate x:Name="PortraitDataTemplate"
+				x:Key="PortraitDataTemplate">
+				<ViewCell>
+					<Frame Margin="10,7.5"
+						Padding="0"
+						CornerRadius="6"
+						BackgroundColor="{x:Static utils:ColorConstants.Frame}">
+						<Grid ColumnSpacing="0"
+							RowSpacing="1">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="95"/>
+								<ColumnDefinition Width="*"/>
+							</Grid.ColumnDefinitions>
+							<Grid.RowDefinitions>
+								<RowDefinition Height="2*"/>
+								<RowDefinition Height="2*"/>
+								<RowDefinition Height="*"/>
+							</Grid.RowDefinitions>
+
+							<ffimageloading:CachedImage Grid.RowSpan="3" Grid.Column="0"
+								HorizontalOptions="Start"
+								VerticalOptions="Fill"
+								Aspect="AspectFit"
+								RetryDelay="10000"
+								RetryCount="2"
+								Source="{Binding PosterPath, 
+										Converter={StaticResource ImagePathConverter},
+										ConverterParameter={x:Static utils:DatabaseApiConstants.SMALL_POSTER_SIZE}}"/>
+							<Label Grid.Row="0" Grid.Column="1"
+								Margin="15,10,15,0"
+								HorizontalOptions="Start"
+								VerticalOptions="Start"
+								FontSize="18"
+								FontAttributes="Bold"
+								TextColor="White"
+								Text="{Binding Title}"/>
+							<Label Grid.Row="1" Grid.Column="1"
+								Style="{StaticResource SmallTextStyle}"
+								Margin="15,0,15,0"
+								HorizontalOptions="Start"
+								VerticalOptions="Center"
+								Text="{Binding GenreNames}" />
+							<Label Grid.Row="2" Grid.Column="1"
+								Style="{StaticResource SmallTextStyle}"
+								Margin="15,0,15,10"
+								HorizontalOptions="Start"
+								VerticalOptions="End"
+								Text="{Binding ReleaseDate, StringFormat='{0:yyyy/MM/dd}'}"/>
+						</Grid>
+					</Frame>
+				</ViewCell>
+			</DataTemplate>
+			<DataTemplate x:Name="LandscapeDataTemplate"
+				x:Key="LandscapeDataTemplate">
+				<ViewCell>
+					<Frame Margin="10,7.5"
+						Padding="0"
+						CornerRadius="6"
+						BackgroundColor="{x:Static utils:ColorConstants.Frame}">
+						<Grid ColumnSpacing="0"
+							RowSpacing="1">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="1.7*"/>
+								<ColumnDefinition Width="*"/>
+							</Grid.ColumnDefinitions>
+							<Grid.RowDefinitions>
+								<RowDefinition Height="2*"/>
+								<RowDefinition Height="2*"/>
+								<RowDefinition Height="*"/>
+							</Grid.RowDefinitions>
+
+							<ffimageloading:CachedImage Grid.RowSpan="3" Grid.Column="0"
+								HorizontalOptions="Start"
+								VerticalOptions="Fill"
+								Aspect="AspectFill"
+								RetryDelay="10000"
+								RetryCount="2"
+								Source="{Binding BackdropPath, 
+										Converter={StaticResource ImagePathConverter},
+										ConverterParameter={x:Static utils:DatabaseApiConstants.MEDIUM_BACKDROP_SIZE}}"/>
+							<Label Grid.Row="0" Grid.Column="1"
+								Margin="15,10,15,0"
+								HorizontalOptions="Start"
+								VerticalOptions="Start"
+								FontSize="18"
+								FontAttributes="Bold"
+								TextColor="White"
+								Text="{Binding Title}"/>
+							<Label Grid.Row="1" Grid.Column="1"
+								Style="{StaticResource SmallTextStyle}"
+								Margin="15,0,15,0"
+								HorizontalOptions="Start"
+								VerticalOptions="Center"
+								Text="{Binding GenreNames}" />
+							<Label Grid.Row="2" Grid.Column="1"
+								Style="{StaticResource SmallTextStyle}"
+								Margin="15,0,15,10"
+								HorizontalOptions="Start"
+								VerticalOptions="End"
+								Text="{Binding ReleaseDate, StringFormat='{0:yyyy/MM/dd}'}"/>
+						</Grid>
+					</Frame>
+				</ViewCell>
+			</DataTemplate>
+		</ResourceDictionary>
+	</ContentPage.Resources>
+
+	<ContentPage.Content>
+		<Grid Margin="0"
+			Padding="0"
+			HorizontalOptions="Fill"
+			VerticalOptions="Fill">
+			<ListView Grid.Row="0"
+				x:Name="ListView"
+				RowHeight="150"
+				SeparatorVisibility="None"
+				BackgroundColor="{x:Static utils:ColorConstants.Background}"
+				ItemsSource="{Binding Movies}">
+				<ListView.Behaviors>					
+					<behaviors:ListViewPagingBehavior Command="{Binding LoadMoreCommand}"
+						Converter="{StaticResource LoadMoreConverter}"/>
+					<prismBehaviors:EventToCommandBehavior EventName="ItemTapped"
+						Command="{Binding ItemTappedCommand}" 
+						EventArgsConverter="{StaticResource ItemTappedConverter}"/>
+				</ListView.Behaviors>
+			</ListView>
+			<ActivityIndicator Grid.Row="0"
+				Margin="0,0,0,10"
+				HeightRequest="40"			
+				HorizontalOptions="Center"
+				VerticalOptions="End"
+				Color="{x:Static utils:ColorConstants.Accent}"
+				IsRunning="{Binding IsBusy}"
+				IsVisible="{Binding IsBusy}"/>
+			<Label Grid.Row="0"
+				HeightRequest="30"	
+				HorizontalOptions="Fill"
+				VerticalOptions="End"
+				HorizontalTextAlignment="Center"
+				VerticalTextAlignment="Center"
+				BackgroundColor="{x:Static utils:ColorConstants.NavigationBarBackground}"
+				TextColor="{x:Static utils:ColorConstants.Accent}"
+				FontSize="20"
+				FontAttributes="Bold"
+				Text="There is no internet connection :("
+				IsVisible="{Binding IsNotConnected}"/>
+		</Grid>
+	</ContentPage.Content>
+</views:OrientationContentPage>
